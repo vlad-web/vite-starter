@@ -1,37 +1,45 @@
 @use 'helpers' as *
 
-.modal-overlay
-	position: fixed
-	inset: 0
-	z-index: 1200
-	background: rgb(29 29 29 / 60%)
-	backdrop-filter: blur(5px)
-	transition: opacity var(--transition-duration), visibility var(--transition-duration)
-	@include hide
-
-	&.is-open
-		@include show
-
-.modal-window
+.modal
 	position: fixed
 	inset: 0
 	z-index: 1300
-	display: flex
-	align-items: center
-	justify-content: center
-	overflow: hidden auto
-	padding: 20px
-	transition: opacity var(--transition-duration), visibility var(--transition-duration)
-	@include hide
+	margin: auto
+	width: calc(100% - 40px)
+	max-width: 600px
+	max-height: calc(100% - 40px)
+	padding: 0
+	border: none
+	overflow: auto
+	background-color: #fff
+	opacity: 0
+	transform: scale(0.96)
+	transition: opacity var(--transition-duration), transform var(--transition-duration), overlay var(--transition-duration) allow-discrete, display var(--transition-duration) allow-discrete
 
-	&.is-open
-		@include show
+	&[open]
+		opacity: 1
+		transform: scale(1)
+
+		@starting-style
+			opacity: 0
+			transform: scale(0.96)
+
+	&::backdrop
+		background-color: rgb(29 29 29 / 0%)
+		backdrop-filter: blur(0)
+		transition: background-color var(--transition-duration), backdrop-filter var(--transition-duration), overlay var(--transition-duration) allow-discrete, display var(--transition-duration) allow-discrete
+
+	&[open]::backdrop
+		background-color: rgb(29 29 29 / 60%)
+		backdrop-filter: blur(5px)
+
+		@starting-style
+			background-color: rgb(29 29 29 / 0%)
+			backdrop-filter: blur(0)
 
 .modal-body
 	position: relative
-	width: 100%
-	max-width: 600px
-	background-color: #fff
+	padding: 40px 30px
 
 .modal-close
 	position: absolute

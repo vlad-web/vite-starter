@@ -6,22 +6,21 @@ import 'swiper/css/bundle'
 
 import '@scss/main.sass'
 
-const overlay = document.querySelector('[data-js-modal-overlay]')
-
 function openModal(name) {
-	const modal = document.querySelector(`[data-popup="${name}"]`)
-	if (!modal) return
-
-	modal.classList.add('is-open')
-	overlay?.classList.add('is-open')
-	document.body.classList.add('is-modal-open')
+	const dialog = document.querySelector(`[data-popup="${name}"]`)
+	dialog?.showModal()
+	document.body.classList.add('no-scroll')
 }
 
-function closeModal() {
-	document.querySelectorAll('[data-popup].is-open').forEach((modal) => modal.classList.remove('is-open'))
-	overlay?.classList.remove('is-open')
-	document.body.classList.remove('is-modal-open')
-}
+document.querySelectorAll('dialog[data-popup]').forEach((dialog) => {
+	dialog.addEventListener('click', (event) => {
+		if (event.target === dialog) dialog.close()
+	})
+
+	dialog.addEventListener('close', () => {
+		document.body.classList.remove('no-scroll')
+	})
+})
 
 document.addEventListener('click', (event) => {
 	const opener = event.target.closest('[data-modal]')
@@ -31,11 +30,7 @@ document.addEventListener('click', (event) => {
 		return
 	}
 
-	const clickedOutsideBody = event.target.closest('.modal-window') && !event.target.closest('.modal-body')
-
-	if (event.target.closest('[data-js-modal-close]') || event.target === overlay || clickedOutsideBody) {
-		closeModal()
-	}
+	event.target.closest('[data-js-modal-close]')?.closest('dialog')?.close()
 })
 
 document.querySelectorAll('.swiper').forEach((el) => new Swiper(el))
