@@ -1,0 +1,48 @@
+@use 'helpers' as *
+
+.modal-overlay
+	display: none
+	position: fixed
+	inset: 0
+	width: 100%
+	height: 100%
+	z-index: 1200
+	background: rgb(29 29 29 / 60%)
+	backdrop-filter: blur(5px)
+
+.modal-window
+	display: none
+	position: fixed
+	inset: 0
+	width: 100%
+	height: 100%
+	overflow: hidden auto
+	z-index: 1300
+
+.modal-grid
+	display: grid
+	align-self: center
+	height: 100%
+	width: 100%
+
+.modal-cell
+	justify-self: center
+	padding: 20px
+
+.modal-body
+	position: relative
+	max-width: 600px
+	background-color: #fff
+
+.modal-close
+	display: flex
+	align-items: center
+	justify-content: center
+	position: absolute
+	z-index: 3
+	top: 5px
+	right: 5px
+	transition: 0.3s
+	cursor: pointer
+	width: 40px
+	height: 40px

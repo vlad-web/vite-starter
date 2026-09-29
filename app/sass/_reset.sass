@@ -1,0 +1,143 @@
+// Box model
+*,
+::before,
+::after
+	box-sizing: border-box
+
+// Document
+html
+	height: 100%
+	scroll-behavior: smooth
+	scrollbar-gutter: stable
+	-webkit-text-size-adjust: 100%
+	text-size-adjust: 100%
+
+body
+	margin: 0
+	scrollbar-gutter: stable
+
+// Headings & text
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+dl
+	margin-block: 0
+
+address
+	font-style: normal
+
+// Lists
+ul,
+ol,
+li
+	padding-left: 0
+	list-style-type: none
+
+ul,
+ol
+	margin-block: 0
+
+// Links
+a,
+a:link,
+a:visited,
+a:hover
+	text-decoration: none
+
+a
+	color: inherit
+
+// Media
+svg,
+a
+	display: inline-flex
+	align-items: center
+
+svg,
+img
+	max-width: 100%
+	max-height: 100%
+
+img
+	object-fit: contain
+
+iframe
+	border: 0
+
+// Forms & buttons
+input,
+textarea,
+select,
+button
+	font: inherit
+	background-color: transparent
+
+button
+	-webkit-tap-highlight-color: transparent
+
+fieldset
+	border: none
+	margin: 0
+	padding: 0
+
+legend
+	padding: 0
+
+textarea
+	resize: vertical
+
+button,
+input[type="submit"],
+input
+	box-shadow: none
+	cursor: pointer
+	border: none
+	outline: none
+
+input[type="number"]
+	appearance: textfield
+
+	&::-webkit-outer-spin-button,
+	&::-webkit-inner-spin-button
+		appearance: none
+
+input:active,
+button:active
+	outline: none
+
+:focus
+	outline: none
+
+:focus-visible
+	outline: 2px solid var(--color-dark)
+	outline-offset: 2px
+
+button::-moz-focus-inner
+	padding: 0
+	border: none
+
+input,
+button,
+select
+	appearance: none
+
+button,
+label
+	cursor: pointer
+
+// Tables
+:where(table)
+	border-collapse: collapse
+
+// Accessibility
+@media (prefers-reduced-motion: reduce)
+	*,
+	::before,
+	::after
+		animation-duration: 0.01ms !important
+		animation-iteration-count: 1 !important
+		transition-duration: 0.01ms !important
+		scroll-behavior: auto !important

@@ -1,0 +1,17 @@
+@use 'helpers' as *
+
+:root
+  --color-dark: #0D0D0D
+  --color-grey: #9D9D9D
+  --font-family: 'Open Sans', sans-serif
+  --transition-duration: 0.25s
+  --transition-body-visible: 1s
+  --container-width: 1280px
+  --container-padding-x: 20px
+
+  @include laptop
+    --container-width: 990px
+  @include tablet
+    --container-width: 770px
+  @include mobile
+    --container-width: 580px

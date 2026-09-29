@@ -1,0 +1,33 @@
+$laptop: 1280.98px
+$tablet: 990.98px
+$mobile: 770.98px
+$mobile-s: 580.98px
+
+
+@mixin laptop-above
+	@media ( width > $laptop )
+		@content
+
+@mixin laptop
+	@media ( width <= $laptop )
+		@content
+
+@mixin tablet
+	@media ( width <= $tablet )
+		@content
+
+@mixin mobile-above
+	@media ( width > $mobile )
+		@content
+
+@mixin mobile
+	@media ( width <= $mobile )
+		@content
+
+@mixin mobile-s-above
+	@media ( width <= $mobile-s )
+		@content
+
+@mixin mobile-s
+	@media ( width <= $mobile-s )
+		@content

@@ -1,0 +1,32 @@
+@mixin hide
+	opacity: 0
+	visibility: hidden
+
+@mixin show
+	opacity: 1
+	visibility: visible
+
+@mixin square($size)
+	width: $size+px
+	height: $size+px
+
+@mixin visually-hidden
+	position: absolute !important
+	width: 1px !important
+	height: 1px !important
+	margin: -1px !important
+	border: 0 !important
+	padding: 0 !important
+	white-space: nowrap !important
+	clip-path: inset(100%) !important
+	clip: rect(0 0 0 0) !important
+	overflow: hidden !important
+
+@mixin hover($hasActiveEffectOnMobile: true)
+	@media(any-hover: hover)
+		&:hover
+			@content
+	@if ($hasActiveEffectOnMobile)
+		@media(any-hover: none)
+			&:active
+				@content

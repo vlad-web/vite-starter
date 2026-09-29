@@ -1,0 +1,31 @@
+@use 'helpers' as *
+
+.button
+	height: 60px
+	font-size: 14px
+	font-weight: 500
+	padding: 0 20px
+	flex-shrink: 0
+	line-height: 1
+	justify-content: center
+	&:disabled
+		opacity: 0.5
+
+.button--blue
+	background-color: var(--color-blue)
+	color: #fff
+	@include hover
+		background-color: var(--color-blue-10)
+
+
+
+@include laptop
+
+
+@include tablet
+
+
+@include mobile
+
+
+@include mobile-s
