@@ -7,6 +7,7 @@ import posthtml from 'posthtml'
 import posthtmlInclude from 'posthtml-include'
 import { optimize } from 'svgo'
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
+import sharp from 'sharp'
 
 // sass.dart.js throws with a huge internal call stack — this keeps only
 // the useful part (message + file:line snippet) when an error is printed
@@ -58,6 +59,42 @@ function svgSprite() {
   }
 }
 
+// Converts every built jpg/png to webp and rewrites all references to it
+// (HTML/CSS/JS) — no fallback, output ships webp only
+function webpImages() {
+  const rasterExt = /\.(jpe?g|png)$/i
+  return {
+    name: 'webp-images',
+    apply: 'build',
+    enforce: 'post',
+    async generateBundle(_, bundle) {
+      const renames = new Map()
+
+      for (const [fileName, chunk] of Object.entries(bundle)) {
+        if (chunk.type !== 'asset' || !rasterExt.test(fileName)) continue
+
+        const source = Buffer.isBuffer(chunk.source) ? chunk.source : Buffer.from(chunk.source)
+        const webpBuffer = await sharp(source).webp({ quality: 82 }).toBuffer()
+        const newFileName = fileName.replace(rasterExt, '.webp')
+
+        renames.set(fileName, newFileName)
+        delete bundle[fileName]
+        this.emitFile({ type: 'asset', fileName: newFileName, source: webpBuffer })
+      }
+
+      if (!renames.size) return
+
+      for (const chunk of Object.values(bundle)) {
+        if (chunk.type === 'asset' && typeof chunk.source === 'string') {
+          for (const [oldName, newName] of renames) chunk.source = chunk.source.split(oldName).join(newName)
+        } else if (chunk.type === 'chunk') {
+          for (const [oldName, newName] of renames) chunk.code = chunk.code.split(oldName).join(newName)
+        }
+      }
+    },
+  }
+}
+
 // Every *.html directly under app/ becomes its own build entry (multi-page)
 function htmlInputs() {
   const files = fg.sync('*.html', { cwd: root })
@@ -96,7 +133,7 @@ export default defineConfig({
       },
     },
   },
-  plugins: [htmlIncludes(), svgSprite(), ViteImageOptimizer()],
+  plugins: [htmlIncludes(), svgSprite(), webpImages(), ViteImageOptimizer({ test: /\.svg$/i })],
   server: {
     open: true,
     headers: {
