@@ -44,7 +44,6 @@ function svgSprite() {
         const { data } = optimize(raw, {
           plugins: [
             'preset-default',
-            { name: 'removeViewBox', active: false },
             { name: 'prefixIds', params: { prefix: name } },
           ],
         })
