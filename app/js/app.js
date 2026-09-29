@@ -31,7 +31,9 @@ document.addEventListener('click', (event) => {
 		return
 	}
 
-	if (event.target.closest('[data-js-modal-close]') || event.target === overlay) {
+	const clickedOutsideBody = event.target.closest('.modal-window') && !event.target.closest('.modal-body')
+
+	if (event.target.closest('[data-js-modal-close]') || event.target === overlay || clickedOutsideBody) {
 		closeModal()
 	}
 })

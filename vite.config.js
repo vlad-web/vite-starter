@@ -99,5 +99,8 @@ export default defineConfig({
   plugins: [htmlIncludes(), svgSprite(), ViteImageOptimizer()],
   server: {
     open: true,
+    headers: {
+      'Cache-Control': 'no-store',
+    },
   },
 })
