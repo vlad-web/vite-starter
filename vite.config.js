@@ -15,6 +15,7 @@ Error.stackTraceLimit = 0
 
 const root = fileURLToPath(new URL('./app', import.meta.url))
 const iconsDir = fileURLToPath(new URL('./app/images/icons', import.meta.url))
+const partialsDir = fileURLToPath(new URL('./app/partials', import.meta.url))
 
 // <include src="partials/header.html"></include> in any *.html under app/
 function htmlIncludes() {
@@ -26,6 +27,15 @@ function htmlIncludes() {
         const result = await posthtml([posthtmlInclude({ root })]).process(html)
         return result.html
       },
+    },
+    configureServer(server) {
+      // partials aren't in Vite's module graph (they're inlined by posthtml-include
+      // above, not imported), so the dev server has no idea index.html depends on
+      // them — watch the folder ourselves and force a reload when one changes
+      server.watcher.add(partialsDir)
+      server.watcher.on('change', (file) => {
+        if (file.startsWith(partialsDir)) server.ws.send({ type: 'full-reload' })
+      })
     },
   }
 }
