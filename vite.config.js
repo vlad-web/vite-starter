@@ -84,7 +84,7 @@ function webpImages() {
         if (chunk.type !== 'asset' || !rasterExt.test(fileName)) continue
 
         const source = Buffer.isBuffer(chunk.source) ? chunk.source : Buffer.from(chunk.source)
-        const webpBuffer = await sharp(source).webp({ quality: 82 }).toBuffer()
+        const webpBuffer = await sharp(source).rotate().webp({ quality: 82 }).toBuffer()
         const newFileName = fileName.replace(rasterExt, '.webp')
 
         renames.set(fileName, newFileName)

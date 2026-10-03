@@ -60,6 +60,7 @@ app/
 | `npm run dev` | дев-сервер |
 | `npm run build` | продакшн-сборка в `dist/` |
 | `npm run preview` | превью собранного билда |
+| `npm run images` | все картинки из `app/images` в `dist/images`: jpg/png → webp, svg оптимизируется (`icons/` пропускается) |
 | `npm run lint:js` | ESLint |
 | `npm run lint:css` | Stylelint |
 | `npm run format` | форматирование Prettier |

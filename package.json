@@ -8,6 +8,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "images": "node scripts/images.js",
     "lint:js": "eslint .",
     "lint:css": "stylelint \"app/sass/**/*.sass\"",
     "format": "prettier --write ."
